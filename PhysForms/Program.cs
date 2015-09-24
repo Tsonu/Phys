@@ -71,16 +71,18 @@ namespace PhysForms
 
                                           int width = form.ClientSize.Width;
                                           int height = form.ClientSize.Height;
-                                          var scaleX = sim.SimBounds.MaxX - sim.SimBounds.MinX;
-                                          var scaleY = sim.SimBounds.MaxY - sim.SimBounds.MinY;
+                                          var simScaleX = sim.SimBounds.MaxX - sim.SimBounds.MinX;
+                                          var simScaleY = sim.SimBounds.MaxY - sim.SimBounds.MinY;
+                                          var viewScaleX = sim.ViewBounds.MaxX - sim.ViewBounds.MinX;
+                                          var viewScaleY = sim.ViewBounds.MaxY - sim.ViewBounds.MinY;
 
                                           d2dRenderTarget.Clear(Color.Black);
                                           foreach (Body body in sim.State)
                                           {
-                                              var x = Convert.ToSingle((body.Pos.X - sim.SimBounds.MinX) * width / scaleX);
-                                              var y = Convert.ToSingle((body.Pos.Y - sim.SimBounds.MinY) * height / scaleY);
-                                              var xRad = Convert.ToSingle((body.Radius) * width / scaleX);
-                                              var yRad = Convert.ToSingle((body.Radius) * height / scaleY);
+                                              var x = Convert.ToSingle((body.Pos.X - sim.SimBounds.MinX) * width / simScaleX);
+                                              var y = Convert.ToSingle((body.Pos.Y - sim.SimBounds.MinY) * height / simScaleY);
+                                              var xRad = Convert.ToSingle((body.Radius) * width / viewScaleX);
+                                              var yRad = Convert.ToSingle((body.Radius) * height / viewScaleY);
                                               var elipse = new EllipseGeometry(d2dFactory, new Ellipse(new Vector2(x, y), xRad, yRad));
                                               d2dRenderTarget.FillGeometry(elipse, solidColorBrush, null);
                                           }

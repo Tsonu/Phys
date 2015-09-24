@@ -76,7 +76,7 @@ namespace PhysSim
             {
                 return new Body()
                 {
-                    Mass = 7.3477e27,
+                    Mass = 7.3477e35,
                     Radius = 2.737e7,
                     Charge = 0,
                     Pos = new Vector2D() { X = 0, Y = 0 },

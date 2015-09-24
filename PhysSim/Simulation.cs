@@ -10,14 +10,23 @@ namespace PhysSim
     public class Simulation
     {
         public SimState State { get; private set; }
-        public Bounds SimBounds { get; set; }
+        public Bounds SimBounds { get; private set; }
+        public Bounds ViewBounds { get; private set; }
+        public int ViewFactor { get; private set; }
         public double Acceleration { get; private set; }
         public double Scale { get; private set; }
         public int Speed { get; private set; }
-        
+
         public Simulation()
         {
             Scale = 1e9;
+            ViewFactor = 2;
+
+            SimBounds = new Bounds() { MinX = -Scale, MinY = -Scale, MaxX = Scale, MaxY = Scale };
+            ViewBounds = new Bounds() { MinX = -Scale * ViewFactor, MinY = -Scale * ViewFactor, MaxX = Scale * ViewFactor, MaxY = Scale * ViewFactor };
+            Acceleration = 1000;
+            Speed = 20;
+
             Random r = new Random();
             State = new SimState();
 
@@ -25,12 +34,10 @@ namespace PhysSim
             {
                 State.Add(Body.Earth);
                 //State.Add(Body.Moon);
-                State[State.Count - 1].Pos.X = r.NextDouble() * 2 * Scale - Scale;
-                State[State.Count - 1].Pos.Y = r.NextDouble() * 2 * Scale - Scale;
-                //State[State.Count - 2].Pos.X = r.NextDouble() * 2 * Scale - Scale;
-                //State[State.Count - 2].Pos.Y = r.NextDouble() * 2 * Scale - Scale;
+                State[State.Count - 1].Pos = Vector2D.Random(r, Scale);
+               // State[State.Count - 2].Pos = Vector2D.Random(r, Scale);
             }
-            //State.Add(Body.BlackHole);
+           // State.Add(Body.BlackHole);
             //State.Add(Body.Earth);
             ////State.Add(Body.Moon);
             //State.Add(Body.Earth);
@@ -39,9 +46,6 @@ namespace PhysSim
             //State[0].Pos.Y = 1e4f;
             //State[0].Vel.X = -1e5f;
 
-            SimBounds = new Bounds() { MinX = -Scale, MinY = -Scale, MaxX = Scale, MaxY = Scale };
-            Acceleration = 1000;
-            Speed = 20;
         }
 
         public void Step()

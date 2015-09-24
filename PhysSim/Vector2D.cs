@@ -40,9 +40,10 @@ namespace PhysSim
             }
         }
 
-        public static Vector2D Random(double scale)
+        //Pass in random so we don't just reseed
+        public static Vector2D Random(Random r, double scale)
         {
-            throw new NotImplementedException();
+            return new Vector2D() { X = r.NextDouble() * 2 * scale - scale, Y = r.NextDouble() * 2 * scale - scale };
         }
 
         public static Vector2D operator +(Vector2D v1, Vector2D v2)
